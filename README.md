@@ -1,2 +1,2 @@
 # bookstore_app
- Student Graduation Project
+ Student Graduation Project, A Spring/Thymeleaf Bookstore App
