@@ -1,0 +1,121 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+          crossorigin="anonymous">
+    <title>Edit Book Listing</title>
+</head>
+<body>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="images/logo.png" alt="Logo" height="35" width="35" class="d-inline-block align-text-top">
+            Bookstore
+        </a>
+        <div class="d-flex">
+            <strong class="align-self-center" sec:authorize="isAuthenticated()" sec:authentication="name"> Bob </strong>&nbsp;
+            <a sec:authorize="!isAuthenticated()" th:href = "@{/login}" class = "btn btn-light"> Login </a>
+            <a sec:authorize="isAuthenticated()" th:href = "@{/logout}" class = "btn btn-light"> Logout </a>
+            <a th:href = "@{/register}" class = "btn btn-light"> Register </a>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Edit Book Listing</h2>
+            </div>
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    You have successfully edited a book listing!
+                </div>
+            </div>
+            <div class="card-body">
+                <form
+                        method="post"
+                        role="form"
+                        th:action="@{/adminPage/editBookListing/{id}/save(id = ${book.bookId})}"
+                        th:object="${book}"
+                >
+                    <div class="form-group mb-3">
+                        <label class="form-label">Title</label>
+                        <input
+                                class="form-control"
+                                userId="title"
+                                name="title"
+                                placeholder="Enter book title"
+                                th:field="*{title}"
+                                type="text"
+                                required="required"
+                        />
+                        <p th:errors = "*{title}" class="text-danger"
+                           th:if="${#fields.hasErrors('title')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Author</label>
+                        <input
+                                class="form-control"
+                                userId="author"
+                                name="author"
+                                placeholder="Enter book author"
+                                th:field="*{author}"
+                                type="text"
+                                required="required"
+                        />
+                        <p th:errors = "*{author}" class="text-danger"
+                           th:if="${#fields.hasErrors('author')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Publisher</label>
+                        <input
+                                class="form-control"
+                                userId="publisher"
+                                name="publisher"
+                                placeholder="Enter book publisher"
+                                th:field="*{publisher}"
+                                type="text"
+                                required="required"
+                        />
+                        <p th:errors = "*{publisher}" class="text-danger"
+                           th:if="${#fields.hasErrors('publisher')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Price</label>
+                        <input
+                                class="form-control"
+                                userId="price"
+                                name="price"
+                                placeholder="Enter book price"
+                                th:field="*{price}"
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                required="required"
+                        />
+                        <p th:errors = "*{price}" class="text-danger"
+                           th:if="${#fields.hasErrors('price')}"></p>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Edit book listing</button>
+                        <span><a th:href="@{/adminPage}"> Back to admin page</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
